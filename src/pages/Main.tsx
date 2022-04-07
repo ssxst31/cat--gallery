@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PhotoCard from '../components/PhotoCard';
+import SearchResultCard from '../components/SearchResultCard';
 import { CatPhoto } from '../type';
 import { getCatPhotoList } from '../api/catPhoto/data';
 import Loading from '../components/Loading';
@@ -60,7 +61,7 @@ function Main() {
         </SearchInputBox>
         <SearchResult>
           {results?.map((item) => (
-            <SearchResultCard>{item.name}</SearchResultCard>
+            <SearchResultCard name={item.name} />
           ))}
         </SearchResult>
       </SearchWrapper>
@@ -126,30 +127,4 @@ const SearchResult = styled.div`
   width: 218px;
 `;
 
-const SearchResultCard = styled.div`
-  width: 218px;
-  height: 31px;
-  line-height: 31px;
-  padding: 0 12px;
-  border: 1px solid #ddd;
-  background-color: #f5f5f5;
-  cursor: pointer;
-
-  &:not(:last-child) {
-    border-bottom: 0;
-  }
-
-  &:first-child {
-    border-radius: 0.4rem 0.4rem 0 0;
-  }
-
-  &:last-child {
-    border-radius: 0 0 0.4rem 0.4rem;
-  }
-
-  &:hover {
-    background: white;
-    color: dodgerblue;
-  }
-`;
 export default Main;
