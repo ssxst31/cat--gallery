@@ -1,4 +1,4 @@
-import { CatPhoto } from '../../src/type';
+import { CatPhoto } from '../../type';
 
 const catPhotoList: CatPhoto[] = [
   {
