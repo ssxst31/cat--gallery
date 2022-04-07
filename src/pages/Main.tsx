@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+
 import styled from 'styled-components';
-import PhotoCard from '../components/PhotoCard';
-import SearchResultCard from '../components/SearchResultCard';
+
 import { CatPhoto } from '../type';
 import { getCatPhotoList } from '../api/catPhoto/data';
 import Loading from '../components/Loading';
+import PhotoCard from '../components/PhotoCard';
+import SearchResultCard from '../components/SearchResultCard';
 
 function Main() {
   const [catPhotoList, setCatPhotoList] = useState<CatPhoto[]>();
