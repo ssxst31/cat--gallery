@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PhotoCard from '../components/PhotoCard';
 
 function Main() {
   return (
@@ -11,6 +12,9 @@ function Main() {
           <SearchButton>Search</SearchButton>
         </SearchInputBox>
       </SearchWrapper>
+      <PhotoList>
+        <PhotoCard />
+      </PhotoList>
     </Wrapper>
   );
 }
@@ -51,6 +55,14 @@ const SearchButton = styled.button`
   background-color: #1e90ff;
   border-width: 2px;
   border-radius: 4px;
+`;
+
+const PhotoList = styled.div`
+  display: grid;
+  max-width: 1024px;
+  margin: 0 auto;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 `;
 
 export default Main;
