@@ -54,7 +54,7 @@ function Main() {
         </SearchInputBox>
         <SearchResult>
           {results?.map((item) => (
-            <div>{item.name}</div>
+            <SearchResultCard>{item.name}</SearchResultCard>
           ))}
         </SearchResult>
       </SearchWrapper>
@@ -118,7 +118,32 @@ const SearchResult = styled.div`
   position: absolute;
   margin: 0 auto;
   width: 218px;
-  top: 3.2rem;
 `;
 
+const SearchResultCard = styled.div`
+  width: 218px;
+  height: 31px;
+  line-height: 31px;
+  padding: 0 12px;
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  cursor: pointer;
+
+  &:not(:last-child) {
+    border-bottom: 0;
+  }
+
+  &:first-child {
+    border-radius: 0.4rem 0.4rem 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 0.4rem 0.4rem;
+  }
+
+  &:hover {
+    background: white;
+    color: dodgerblue;
+  }
+`;
 export default Main;
