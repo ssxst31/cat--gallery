@@ -6,6 +6,8 @@ import { getCatPhotoList } from '../api/catPhoto/data';
 
 function Main() {
   const [catPhotoList, setCatPhotoList] = useState<CatPhoto[]>();
+  const [search, setSearch] = useState<string>('');
+  const [results, setResults] = useState<CatPhoto[]>();
 
   useEffect(() => {
     getCatPhotoList().then((res: CatPhoto[]) => {
@@ -13,14 +15,48 @@ function Main() {
     });
   }, []);
 
+  useEffect(() => {
+    getCatPhotoList().then((res: CatPhoto[]) => {
+      setCatPhotoList(res);
+    });
+  }, [search]);
+  const updateField = (field: string, value: any, update = true) => {
+    if (update) onSearch(value as string);
+
+    if (field === 'keyword') {
+      setSearch(value as string);
+    }
+    if (field === 'results') {
+      setResults(value as CatPhoto[]);
+    }
+  };
+
+  const matchName = (name: string, keyword: string) => {
+    const keyLen = keyword.length;
+
+    const lowerCaseName = name.toLowerCase().substring(0, keyLen);
+    if (keyword === '') return false;
+    return lowerCaseName === keyword.toString().toLowerCase();
+  };
+
+  const onSearch = (text: string) => {
+    const newCatPhotoList = catPhotoList?.filter((item) => item.name.includes(text) || matchName(item.name, text));
+    setResults(newCatPhotoList);
+  };
+
   return (
     <Wrapper>
       <Title>😸 고양이 사진 갤러리 😻</Title>
       <SearchWrapper>
         <SearchInputBox>
-          <SearchInput />
+          <SearchInput value={search} onChange={(e) => updateField('keyword', e.target.value)} />
           <SearchButton>Search</SearchButton>
         </SearchInputBox>
+        <SearchResult>
+          {results?.map((item) => (
+            <div>{item.name}</div>
+          ))}
+        </SearchResult>
       </SearchWrapper>
       <PhotoList>
         {catPhotoList?.map((item) => (
@@ -75,6 +111,14 @@ const PhotoList = styled.div`
   margin: 0 auto;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+`;
+
+const SearchResult = styled.div`
+  z-index: 10;
+  position: absolute;
+  margin: 0 auto;
+  width: 218px;
+  top: 3.2rem;
 `;
 
 export default Main;
