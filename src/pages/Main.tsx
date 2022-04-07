@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PhotoCard from '../components/PhotoCard';
+import { CatPhoto } from '../type';
+import { getCatPhotoList } from '../api/catPhoto/data';
 
 function Main() {
+  const [catPhotoList, setCatPhotoList] = useState<CatPhoto[]>();
+
+  useEffect(() => {
+    getCatPhotoList().then((res: CatPhoto[]) => {
+      setCatPhotoList(res);
+    });
+  }, []);
+
   return (
     <Wrapper>
       <Title>😸 고양이 사진 갤러리 😻</Title>
@@ -13,7 +23,9 @@ function Main() {
         </SearchInputBox>
       </SearchWrapper>
       <PhotoList>
-        <PhotoCard />
+        {catPhotoList?.map((item) => (
+          <PhotoCard image={item.image} name={item.name} />
+        ))}
       </PhotoList>
     </Wrapper>
   );
