@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PhotoCard from '../components/PhotoCard';
 import { CatPhoto } from '../type';
 import { getCatPhotoList } from '../api/catPhoto/data';
+import Loading from '../components/Loading';
 
 function Main() {
   const [catPhotoList, setCatPhotoList] = useState<CatPhoto[]>();
@@ -20,6 +21,11 @@ function Main() {
       setCatPhotoList(res);
     });
   }, [search]);
+
+  if (!catPhotoList) {
+    return <Loading />;
+  }
+
   const updateField = (field: string, value: any, update = true) => {
     if (update) onSearch(value as string);
 
@@ -40,7 +46,7 @@ function Main() {
   };
 
   const onSearch = (text: string) => {
-    const newCatPhotoList = catPhotoList?.filter((item) => item.name.includes(text) || matchName(item.name, text));
+    const newCatPhotoList = catPhotoList.filter((item) => item.name.includes(text) || matchName(item.name, text));
     setResults(newCatPhotoList);
   };
 
@@ -59,7 +65,7 @@ function Main() {
         </SearchResult>
       </SearchWrapper>
       <PhotoList>
-        {catPhotoList?.map((item) => (
+        {catPhotoList.map((item) => (
           <PhotoCard image={item.image} name={item.name} />
         ))}
       </PhotoList>
